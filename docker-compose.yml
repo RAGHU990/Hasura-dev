@@ -44,7 +44,7 @@ services:
                 "path": "$.sub"
             }
         },
-          "issuer": "https://securetoken.google.com/ hasura-8c44d"}'
+          "issuer":"https://securetoken.google.com/hasura-8c44d"}'
 volumes:
   db_data:
 
