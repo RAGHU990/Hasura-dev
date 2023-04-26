@@ -4,15 +4,16 @@ services:
     image: postgres:12
     restart: always
     volumes:
-    - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
+
   graphql-engine:
     image: hasura/graphql-engine:v2.21.0
     ports:
-    - "8080:8080"
+      - "8080:8080"
     depends_on:
-    - "postgres"
+      - postgres
     restart: always
     environment:
       ## postgres database to store Hasura metadata
@@ -22,19 +23,15 @@ services:
       ## enable the console served by server
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       ## enable debugging mode. It is recommended to disable this in production
-      HASURA_GRAPHQL_ADMIN_SECRET: "myadminsecret"
-     
-
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       ## uncomment next line to run console offline (i.e load console assets from server instead of CDN)
       # HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
       ## uncomment next line to set an admin secret
-      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
-      
+      HASURA_GRAPHQL_ADMIN_SECRET: "myadminsecret"
 
       HASURA_GRAPHQL_JWT_SECRET: '{"type":"RS256","jwk_url": "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com",
-         "audience": " hasura-8c44d",
+         "audience": "hasura-8c44d",
          "claims_map": {
             "x-hasura-allowed-roles": [
                 "user"
@@ -45,6 +42,6 @@ services:
             }
         },
           "issuer":"https://securetoken.google.com/hasura-8c44d"}'
+
 volumes:
   db_data:
-
