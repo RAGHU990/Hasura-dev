@@ -30,18 +30,6 @@ services:
       ## uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: "myadminsecret"
 
-      HASURA_GRAPHQL_JWT_SECRET: '{"type":"RS256","jwk_url": "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com",
-         "audience": "hasura-8c44d",
-         "claims_map": {
-            "x-hasura-allowed-roles": [
-                "user"
-            ],
-            "x-hasura-default-role": "user",
-            "x-hasura-user-id": {
-                "path": "$.sub"
-            }
-        },
-          "issuer":"https://securetoken.google.com/hasura-8c44d"}'
-
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"RS256","jwk_url": "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com","audience": "hasura-8c44d", "claims_map": {"x-hasura-allowed-roles": ["user" ],"x-hasura-default-role": "user", "x-hasura-user-id": {"path": "$$.sub" }},"issuer":"https://securetoken.google.com/hasura-8c44d"}'
 volumes:
   db_data:
