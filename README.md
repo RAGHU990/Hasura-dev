@@ -1,6 +1,62 @@
 # Hasura-dev
 
+Sure, here are the steps to install and set up Hasura using Docker with PostgreSQL:
+
+1. Install Docker and Docker Compose on your machine if you haven't already done so.
+   
+2. Create a new directory for your Hasura app and navigate to it using the terminal.
+   
+3. Create a new file named `docker-compose.yml` in the directory and add the following code to it:
+
+    ```
+    version: '3.6'
+    services:
+      postgres:
+        container_name: postgres
+        image: postgres:12
+        restart: always
+        environment:
+          POSTGRES_PASSWORD: your-password
+          POSTGRES_USER: your-username
+          POSTGRES_DB: your-database
+        ports:
+          - "5432:5432"
+    
+      graphql-engine:
+        container_name: graphql-engine
+        image: hasura/graphql-engine:v2.0.7
+        ports:
+          - "8080:8080"
+        depends_on:
+          - postgres
+        restart: always
+        environment:
+          HASURA_GRAPHQL_DATABASE_URL: postgres://your-username:your-password@postgres:5432/your-database
+          HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+          HASURA_GRAPHQL_ADMIN_SECRET: your-admin-secret
+    ```
+      - Change the values of `"your-password"`, `"your-username"`, `"your-database"`, and `"your-admin-secret"` according to your requirement.
+   
+4. Once you have saved the `docker-compose.yml` file, run the following command in the terminal to start the containers:
+   
+    ```
+    docker-compose up -d
+    ```
+   
+   This will start the PostgreSQL and Hasura GraphQL Engine containers in the background. 
+   
+   The `-d` flag stands for detached mode, which means the containers will continue to run in the background even after you close the terminal.
+   
+5. Once the containers have started, you can access the Hasura GraphQL Engine console by opening a web browser and navigating to `http://localhost:8080/console`.
+   
+6. In the console, you can create tables, relationships, permissions, and more for your GraphQL API. 
+
+That's it, you now have a fully functional Hasura GraphQL Engine backed by PostgreSQL running on Docker.
+
 Sure, here's the updated and formatted version:
+
+
+
 
 ## Deploying Hasura GraphQL Engine and Postgres Containers in a Lightsail Ubuntu Instance
 
